@@ -1,0 +1,151 @@
+# Backend configuration.
+#
+# Anything here can be overridden by the environment using the BROWSER_ prefix
+# and __ for nesting, e.g. BROWSER_SERVER__PORT=9000.
+# Secrets belong in backend/.env, not in this file.
+
+server:
+  host: 127.0.0.1        # loopback only; other values are rejected at startup
+  port: 8765
+  allowed_origins: []    # extra origins beyond chrome-extension://*
+  allow_any_extension_origin: true
+
+auth:
+  token: ""              # set in .env as BROWSER_AUTH__TOKEN (min 16 chars)
+
+provider:
+  active: local_agent          # offline inference by default; explicit environment selection wins
+
+routing:
+  enabled: true
+  deterministic_first: false # compatibility only; every normal query uses the local router
+  fallback_provider: local_router
+  fallback_timeout_seconds: 300 # 5 minutes, including cold local model loading
+  max_reroutes: 4
+
+providers:
+  local_agent: &local_agent
+    type: ollama
+    model: qwen3.5:9b
+    base_url: http://127.0.0.1:11434
+    auth:
+      mode: none
+    local_only: true
+    num_ctx: 32768
+    think: false
+    tool_mode: structured   # explicit validated JSON dispatch; native remains available
+    temperature: 0.2
+    max_output_tokens: 2048
+    timeout_seconds: 900 # 15 minutes for slow local inference
+    max_retries: 0
+    supports_images: true
+  # Compatibility alias for an existing explicit local selection.
+  local: *local_agent
+  local_router:
+    type: ollama
+    model: qwen3.5:2b
+    base_url: http://127.0.0.1:11434
+    auth:
+      mode: none
+    local_only: true
+    num_ctx: 4096
+    think: false
+    tool_mode: structured
+    temperature: 0
+    max_output_tokens: 20000
+    timeout_seconds: 300
+    max_retries: 0
+    supports_images: false
+  local_llamacpp:
+    type: openai_compatible
+    model: local-agent
+    base_url: http://127.0.0.1:8081/v1
+    auth:
+      mode: none
+    local_only: true
+    max_output_tokens: 2048
+    timeout_seconds: 60
+    max_retries: 0
+    supports_images: false
+  anthropic:
+    type: anthropic
+    model: claude-opus-5 # retained from the existing approved configuration
+    api_key_env: ANTHROPIC_API_KEY
+    max_output_tokens: 16000
+    timeout_seconds: 60
+    effort: null
+    refusal_fallback: false
+  openai:
+    type: openai
+    api: responses
+    model: MODEL_NAME        # choose an approved model before selecting this profile
+    api_key_env: OPENAI_API_KEY
+  azure_openai:
+    type: azure_openai
+    api: responses
+    endpoint_env: AZURE_OPENAI_ENDPOINT
+    api_key_env: AZURE_OPENAI_API_KEY
+    deployment_env: AZURE_OPENAI_DEPLOYMENT
+  internal_openai:
+    type: openai_compatible
+    base_url_env: INTERNAL_OPENAI_BASE_URL
+    api_key_env: INTERNAL_OPENAI_API_KEY
+    model: INTERNAL_MODEL_NAME
+  internal_anthropic:
+    type: anthropic_compatible
+    base_url_env: INTERNAL_ANTHROPIC_BASE_URL
+    api_key_env: INTERNAL_ANTHROPIC_API_KEY
+    model: INTERNAL_MODEL_NAME
+    refusal_fallback: false
+  mock:
+    type: mock
+    model: mock-1
+
+page:
+  max_visible_text_chars: 20000
+  max_elements: 300
+
+agent:
+  max_steps: 30
+  step_timeout_seconds: 1200 # 20 minutes; allows the model request to finish
+  run_timeout_seconds: 3600 # 60 minutes for the whole task
+  token_budget: null # no per-run token cap; usage is still reported
+  history_steps: 12
+
+site_adapters: {}
+
+security:
+  confirmation_policy: delete_only # Only deletion actions require a human decision.
+  require_confirmation_for:
+    - submit
+    - delete
+    - upload
+    - download
+    - send
+    - execute_javascript
+    - navigate_external
+    - untrusted_argument
+    - cross_origin_transfer
+  audit_log_path: audit/actions.jsonl
+
+logging:
+  level: INFO
+  format: json           # json | text
+
+# Local PDF retrieval: preserve BM25 + MiniLM; fuse page ranks with Nomic.
+visual_retrieval:
+  enabled: true
+  model: nomic-ai/nomic-embed-multimodal-3b
+  local_only: true
+  device: auto
+  # model_directory/base_model_directory: optional existing local directories.
+  # python_executable: optional existing ColPali runtime; defaults to backend Python.
+multimodal_retrieval:
+  enabled: true
+  always_use_text: true
+  always_use_visual: true
+  text_top_k: 5
+  visual_top_k: 5
+  fused_top_k: 5
+  max_visual_pages: 3
+  fusion: rrf

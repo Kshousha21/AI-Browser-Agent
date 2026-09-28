@@ -1,0 +1,16 @@
+<!-- Content-free reproduction of the observed Select2 attribute-sync behavior. -->
+<label for="synthetic-filter">Synthetic filter</label>
+<input id="synthetic-filter" type="text">
+<div id="synthetic-select2" class="select2-container aui-select2-container"></div>
+<script>
+(() => {
+  const input = document.getElementById('synthetic-filter');
+  const container = document.getElementById('synthetic-select2');
+  window.__select2SyncCount = 0;
+  new MutationObserver(() => {
+    window.__select2SyncCount++;
+    container.setAttribute('class', 'select2-container');
+    container.setAttribute('class', 'select2-container aui-select2-container');
+  }).observe(input, {attributes: true});
+})();
+</script>

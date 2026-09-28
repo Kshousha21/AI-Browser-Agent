@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Northwind Knowledge Search Results</title>
+    <style>
+      body { margin: 0; font: 15px/1.55 system-ui, sans-serif; color: #17202a; }
+      header { background: #173f6b; color: white; padding: 22px; }
+      main { max-width: 940px; margin: 0 auto; padding: 24px; }
+      .filter { display: flex; gap: 8px; align-items: center; margin: 18px 0; }
+      input { min-width: 300px; padding: 8px; }
+      table { width: 100%; border-collapse: collapse; }
+      th, td { border: 1px solid #ccd3da; padding: 9px; text-align: left; vertical-align: top; }
+      th { background: #eef3f8; }
+      a { color: #145ca8; }
+      output { display: block; color: #52606d; margin-top: 5px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Knowledge search results</h1>
+      <p id="query-heading">Search results</p>
+    </header>
+    <main>
+      <p><a href="index.html">Back to the employee handbook</a></p>
+
+      <div class="filter">
+        <label for="result-filter">Filter these results</label>
+        <input id="result-filter" type="text" placeholder="Filter by title or team" />
+      </div>
+      <output id="filter-observation">Framework handler observed: (empty)</output>
+
+      <table aria-label="Knowledge documents">
+        <thead>
+          <tr>
+            <th>Document</th>
+            <th>Owner</th>
+            <th>Updated</th>
+            <th>Summary</th>
+          </tr>
+        </thead>
+        <tbody id="result-rows">
+          <tr>
+            <td><a href="detail.html#eng-204">Integrated Photonics Packaging Playbook (ENG-204)</a></td>
+            <td>Advanced Manufacturing</td>
+            <td>18 August 2026</td>
+            <td>Assembly guidance for silicon photonics modules, including passive alignment, fiber-array attach, underfill selection, thermal control, and hermetic package qualification.</td>
+          </tr>
+          <tr>
+            <td><a href="detail.html#opt-118">Co-packaged Optics Qualification Matrix (OPT-118)</a></td>
+            <td>Optical Systems</td>
+            <td>2 July 2026</td>
+            <td>Reliability gates for co-packaged optics: thermal cycling, vibration, optical insertion-loss drift, moisture sensitivity, and accelerated-life sampling.</td>
+          </tr>
+          <tr>
+            <td><a href="detail.html#sup-077">Photonics Packaging Supplier Directory (SUP-077)</a></td>
+            <td>Strategic Sourcing</td>
+            <td>11 June 2026</td>
+            <td>Approved European vendors for ceramic carriers, laser-welded lids, fiber attach, glass interposers, and high-density optical connectors.</td>
+          </tr>
+          <tr>
+            <td><a href="detail.html#lab-031">Packaging Lab Booking and Safety (LAB-031)</a></td>
+            <td>Photonics Lab</td>
+            <td>29 May 2026</td>
+            <td>Booking rules and training prerequisites for die bonders, active-alignment stations, plasma cleaning, lid sealing, and X-ray inspection.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p id="result-count">4 matching documents</p>
+    </main>
+    <script>
+      const params = new URLSearchParams(location.search);
+      const query = params.get("q") || "";
+      document.getElementById("query-heading").textContent =
+        `Search results for "${query}" �w^~)�t 4 matching documents`;
+
+      const filter = document.getElementById("result-filter");
+      const observation = document.getElementById("filter-observation");
+      const rows = [...document.querySelectorAll("#result-rows tr")];
+      let controlledValue = "";
+      filter.addEventListener("input", (event) => {
+        controlledValue = event.target.value;
+        filter.value = controlledValue;
+        observation.textContent =
+          `Framework handler observed: ${controlledValue || "(empty)"}`;
+        observation.dataset.observedValue = controlledValue;
+        const needle = controlledValue.toLowerCase();
+        let visible = 0;
+        for (const row of rows) {
+          const show = row.textContent.toLowerCase().includes(needle);
+          row.hidden = !show;
+          if (show) visible += 1;
+        }
+        document.getElementById("result-count").textContent =
+          `${visible} matching documents`;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,157 @@
+:root {
+  color-scheme: light dark;
+
+  --bg: #ffffff;
+  --bg-subtle: #f5f6f8;
+  --border: #dfe1e6;
+  --text: #1b1d21;
+  --text-muted: #62666d;
+  --accent: #2f6feb;
+  --accent-text: #ffffff;
+  --error: #b3261e;
+  --ok: #1e8e3e;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1d21;
+    --bg-subtle: #24272c;
+    --border: #383c43;
+    --text: #e8eaed;
+    --text-muted: #9aa0a6;
+    --accent: #6699ff;
+    --accent-text: #10131a;
+    --error: #f2b8b5;
+    --ok: #6dd58c;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font: 14px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.page {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+
+h1 {
+  font-size: 18px;
+  margin: 0 0 20px;
+}
+
+h2 {
+  font-size: 14px;
+  margin: 0 0 6px;
+}
+
+.field {
+  display: block;
+  margin-bottom: 18px;
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+input,
+textarea {
+  font: inherit;
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 13px;
+  width: 100%;
+  padding: 7px 9px;
+  color: var(--text);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+.hint {
+  display: block;
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+code {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0 3px;
+  font-size: 0.92em;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+button {
+  font: inherit;
+  border-radius: 6px;
+  padding: 7px 16px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+button.primary {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+button.secondary {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.status {
+  min-height: 1.5em;
+  margin: 14px 0 0;
+  font-size: 13px;
+  color: var(--text-muted);
+  white-space: pre-wrap;
+}
+
+.status[data-kind="ok"] {
+  color: var(--ok);
+}
+
+.status[data-kind="error"] {
+  color: var(--error);
+}
+
+.note {
+  margin-top: 34px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-subtle);
+}
+
+.note p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}

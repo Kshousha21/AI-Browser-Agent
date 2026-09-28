@@ -1,0 +1,8 @@
+[
+  {"question":"What does the report say about thermal resistance?","expected_pages":[1,4]},
+  {"question":"What temperature results are reported?","expected_pages":[4]},
+  {"question":"What does the graph show?","expected_pages":[4]},
+  {"question":"What is the system architecture?","expected_pages":[2]},
+  {"question":"What differences are visible between the two approaches?","expected_pages":[4]},
+  {"question":"What does the table report about performance?","expected_pages":[3]}
+]

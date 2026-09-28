@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Browser Agent — Settings</title>
+    <link rel="stylesheet" href="./options.css" />
+  </head>
+  <body>
+    <main class="page">
+      <h1>AI Browser Agent</h1>
+
+      <form id="form">
+        <label class="field">
+          <span class="label">Backend URL</span>
+          <input id="backend-url" type="text" spellcheck="false" placeholder="ws://127.0.0.1:8765" />
+          <span class="hint">
+            The WebSocket base of your local backend. <code>/ws</code> is appended.
+          </span>
+        </label>
+
+        <label class="field">
+          <span class="label">Token</span>
+          <input id="token" type="password" spellcheck="false" autocomplete="off" />
+          <span class="hint">
+            Must match <code>auth.token</code> in the backend config. Stored in
+            <code>chrome.storage.local</code>, never synced.
+          </span>
+        </label>
+
+        <label class="field">
+          <span class="label">Optional persistent site access</span>
+          <input id="site" type="url" placeholder="https://example.org" />
+          <span class="hint">Usually unnecessary: click the extension on a website to authorize that tab.</span>
+        </label>
+
+        <label class="field">
+          <span class="label">Max page text (characters)</span>
+          <input id="max-chars" type="number" min="1000" step="1000" />
+          <span class="hint">Page text is truncated to this length before it is sent.</span>
+        </label>
+
+        <div class="actions">
+          <button type="submit" class="primary">Save</button>
+          <button type="button" id="test" class="secondary">Test connection</button>
+          <button type="button" id="grant" class="secondary">Grant optional site access</button>
+        </div>
+
+        <p class="status" id="status" role="status"></p>
+      </form>
+
+      <section class="note">
+        <h2>Host access</h2>
+        <p>Click the extension on any normal HTTP/HTTPS website. Chrome may require another
+          click after cross-origin navigation. Optional persistent access avoids that step for
+          sites you choose. Revoke it in Chrome extension settings. Internal Chrome pages are unavailable.</p>
+      </section>
+    </main>
+
+    <script type="module" src="./options.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,161 @@
+# Provider profiles contain environment variable names, never secret values.
+# Select a profile and restart the backend. Only that profile is validated.
+provider:
+  active: local_agent
+
+routing:
+  enabled: true
+  deterministic_first: false # compatibility only; every normal query uses the local router
+  fallback_provider: local_router
+  fallback_timeout_seconds: 90 # includes cold local model loading
+  max_reroutes: 4
+
+providers:
+  local_agent: &local_agent
+    type: ollama
+    model: qwen3.5:9b
+    base_url: http://127.0.0.1:11434
+    auth:
+      mode: none
+    local_only: true
+    num_ctx: 32768
+    think: false
+    tool_mode: structured   # explicit validated JSON dispatch; native remains available
+    temperature: 0.2
+    max_output_tokens: 2048
+    timeout_seconds: 60
+    max_retries: 0
+    supports_images: true
+  # Compatibility alias for an existing explicit local selection.
+  local: *local_agent
+  local_router:
+    type: ollama
+    model: qwen3.5:2b
+    base_url: http://127.0.0.1:11434
+    auth:
+      mode: none
+    local_only: true
+    num_ctx: 4096
+    think: false
+    tool_mode: structured
+    temperature: 0
+    max_output_tokens: 64
+    timeout_seconds: 90
+    max_retries: 0
+    supports_images: false
+  local_llamacpp:
+    type: openai_compatible
+    model: local-agent
+    base_url: http://127.0.0.1:8081/v1
+    auth:
+      mode: none
+    local_only: true
+    max_output_tokens: 2048
+    timeout_seconds: 60
+    max_retries: 0
+    supports_images: false
+  anthropic:
+    type: anthropic
+    base_url: https://api.anthropic.com
+    api_key_env: ANTHROPIC_API_KEY
+    model: MODEL_NAME
+    max_output_tokens: 16000
+    refusal_fallback: false
+    supports_images: false # Opt in only after verifying this configured model accepts page images.
+  openai:
+    type: openai
+    api: responses       # chat_completions remains available for compatible models
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+    model: MODEL_NAME
+  azure_openai:
+    type: azure_openai
+    api: responses       # v1; use chat_completions for a dated/versioned API
+    endpoint_env: AZURE_OPENAI_ENDPOINT
+    api_key_env: AZURE_OPENAI_API_KEY
+    deployment_env: AZURE_OPENAI_DEPLOYMENT
+    # Omit for the current Azure /openai/v1 API. Add this reference only for
+    # a deployment using the dated/versioned Azure API:
+    # api_version_env: AZURE_OPENAI_API_VERSION
+  ollama:
+    type: ollama
+    base_url: http://127.0.0.1:11434
+    model: LOCAL_MODEL_NAME
+    auth:
+      mode: none
+  internal_openai:
+    type: openai_compatible
+    base_url_env: INTERNAL_OPENAI_BASE_URL
+    api_key_env: INTERNAL_OPENAI_API_KEY
+    model: INTERNAL_MODEL_NAME
+  internal_anthropic:
+    type: anthropic_compatible
+    base_url_env: INTERNAL_ANTHROPIC_BASE_URL
+    api_key_env: INTERNAL_ANTHROPIC_API_KEY
+    model: INTERNAL_MODEL_NAME
+    refusal_fallback: false
+  mock:
+    type: mock
+    model: mock-1
+
+# internal_custom is pending an actual endpoint contract and is not registered.
+# Optional internal-profile settings (environment references only):
+# auth:
+#   mode: bearer                    # native | none | bearer | api_key_header
+#   token_env: INTERNAL_ENTERPRISE_TOKEN
+#   # header_name: X-Enterprise-Key # required with api_key_header
+# headers_env:
+#   X-Enterprise-Context: INTERNAL_EXTRA_HEADER
+# tls:
+#   ca_bundle_env: PROVIDER_CA_BUNDLE_PATH
+#   client_cert_env: PROVIDER_CLIENT_CERT_PATH
+#   client_key_env: PROVIDER_CLIENT_KEY_PATH
+# timeout_seconds: 60
+# max_retries: 2
+
+server:
+  host: 127.0.0.1
+  port: 8765
+  allowed_origins: []
+  allow_any_extension_origin: true
+auth:
+  token: "" # BROWSER_AUTH__TOKEN, supplied privately
+page:
+  max_visible_text_chars: 20000
+  max_elements: 300
+research:
+  max_pdfs: 3             # Per explicit research question; hard maximum 5.
+  max_visual_pages: 3     # Text first; hard maximum 5 rendered pages per question.
+
+agent:
+  max_steps: 30
+  step_timeout_seconds: 90
+  run_timeout_seconds: 300
+  token_budget: null # no per-run token cap; usage is still reported
+  history_steps: 12
+site_adapters: {}
+
+security:
+  confirmation_policy: delete_only # Only deletion actions require a human decision.
+  audit_log_path: audit/actions.jsonl
+logging:
+  level: INFO
+  format: json
+
+# Local PDF retrieval: preserve BM25 + MiniLM; fuse page ranks with Nomic.
+visual_retrieval:
+  enabled: true
+  model: nomic-ai/nomic-embed-multimodal-3b
+  local_only: true
+  device: auto
+  # model_directory/base_model_directory: optional existing local directories.
+  # python_executable: optional existing ColPali runtime; defaults to backend Python.
+multimodal_retrieval:
+  enabled: true
+  always_use_text: true
+  always_use_visual: true
+  text_top_k: 5
+  visual_top_k: 5
+  fused_top_k: 5
+  max_visual_pages: 3
+  fusion: rrf

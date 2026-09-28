@@ -1,0 +1,8 @@
+.file-cards { display: grid; gap: 8px; margin: 10px 0; }
+.file-card { border: 1px solid #c8d5cf; border-radius: 9px; padding: 10px; background: #f8fbf9; overflow-wrap: anywhere; }
+.file-card-heading { display: flex; gap: 8px; align-items: flex-start; }
+.file-card-type { flex: none; color: #155b42; background: #e0eee7; border-radius: 4px; padding: 3px 5px; font-size: 10px; font-weight: 700; }
+.file-card-detail, .file-card-state { margin: 6px 0; font-size: 12px; color: #52625b; }
+.file-card-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.file-card-actions button, .file-card-refresh { font-size: 12px; padding: 5px 8px; }
+.file-card-complete { margin: 8px 0; }

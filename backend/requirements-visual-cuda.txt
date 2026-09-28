@@ -1,0 +1,5 @@
+# Optional CUDA 13.0 runtime for Nomic on this NVIDIA workstation.
+# Install AFTER requirements.txt; model weights are managed separately.
+--extra-index-url https://download.pytorch.org/whl/cu130
+torch==2.13.0+cu130
+torchvision==0.28.0+cu130

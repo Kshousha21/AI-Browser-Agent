@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8" /><title>accname fixture</title></head>
+  <body>
+    <!-- 1. aria-labelledby wins over everything -->
+    <span id="lbl1">Labelled By Text</span>
+    <button id="t1" aria-labelledby="lbl1" aria-label="ignored" title="ignored">content ignored</button>
+
+    <!-- aria-labelledby with several ids, joined in order -->
+    <span id="a">First</span><span id="b">Second</span>
+    <button id="t2" aria-labelledby="a b">ignored</button>
+
+    <!-- aria-labelledby pointing at a missing id falls through -->
+    <button id="t3" aria-labelledby="nope" aria-label="Fallback Label">ignored</button>
+
+    <!-- 2. aria-label beats native label and content -->
+    <label for="t4">Native Label</label>
+    <input id="t4" type="text" aria-label="Aria Label" placeholder="ph" />
+
+    <!-- 3a. native label by for= -->
+    <label for="t5">Email address</label>
+    <input id="t5" type="email" placeholder="you@example.com" />
+
+    <!-- 3b. native label by containment -->
+    <label>Wrapped Label <input id="t6" type="text" /></label>
+
+    <!-- 3c. input value for button-type inputs -->
+    <input id="t7" type="submit" value="Send it" />
+    <input id="t8" type="submit" />
+    <input id="t9" type="reset" />
+    <input id="t10" type="button" value="Click me" />
+
+    <!-- 3d. image input uses alt -->
+    <input id="t11" type="image" alt="Go now" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" />
+
+    <!-- 3e. img alt; empty alt is a real empty name -->
+    <a id="t12" href="#"><img alt="Home page" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" /></a>
+    <a id="t13" href="#" title="Titled link"><img alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" /></a>
+
+    <!-- 3f. fieldset legend -->
+    <fieldset id="t14"><legend>Shipping details</legend><input type="text" /></fieldset>
+
+    <!-- 3g. disabled fieldset disables its controls -->
+    <fieldset disabled><legend>Off</legend><input id="t15" type="text" aria-label="Inside disabled fieldset" /></fieldset>
+
+    <!-- 4. name from content, with a nested labelled child -->
+    <button id="t16">Save <span aria-label="the document">doc</span></button>
+
+    <!-- content is NOT used for roles that disallow it -->
+    <input id="t17" type="text" />
+    <div id="t18" role="textbox" contenteditable="true">typed content</div>
+
+    <!-- 5. title, then placeholder, as last resorts -->
+    <button id="t19" title="Titled button"></button>
+    <input id="t20" type="text" placeholder="Just a placeholder" />
+    <input id="t21" type="text" title="Title beats placeholder" placeholder="ph" />
+
+    <!-- aria-labelledby cycles must terminate -->
+    <button id="t22" aria-labelledby="t23">A</button>
+    <button id="t23" aria-labelledby="t22">B</button>
+
+    <!-- self-reference -->
+    <button id="t24" aria-labelledby="t24">Self</button>
+
+    <!-- roles -->
+    <a id="t25">anchor without href</a>
+    <select id="t26" aria-label="single"><option>x</option></select>
+    <select id="t27" multiple aria-label="multi"><option>x</option></select>
+    <input id="t28" type="search" aria-label="s" />
+    <input id="t29" type="checkbox" aria-label="c" />
+    <input id="t30" type="range" aria-label="r" />
+    <div id="t31" role="tab" aria-label="explicit role wins">x</div>
+
+    <!-- disabled / aria-disabled -->
+    <button id="t32" disabled aria-label="Really disabled">x</button>
+    <button id="t33" aria-disabled="true" aria-label="Aria disabled">x</button>
+
+    <!-- hidden variants -->
+    <button id="t34" style="display:none" aria-label="Display none">x</button>
+    <button id="t35" style="visibility:hidden" aria-label="Visibility hidden">x</button>
+    <div style="display:none"><button id="t36" aria-label="Ancestor hidden">x</button></div>
+    <button id="t37" aria-hidden="true" aria-label="Aria hidden">x</button>
+
+    <!-- table caption -->
+    <table id="t38"><caption>Quarterly figures</caption><tr><td>1</td></tr></table>
+  </body>
+</html>

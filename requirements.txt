@@ -1,0 +1,3 @@
+# Install from the project root: pip install -r requirements.txt
+# Keep the pinned package list in one place. Model weights are downloaded separately.
+-r backend/requirements.txt

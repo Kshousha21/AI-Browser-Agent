@@ -1,0 +1,30 @@
+[
+  {
+    "url": "https://example.org/docs",
+    "allowed": true
+  },
+  {
+    "url": "http://localhost:8080/",
+    "allowed": true
+  },
+  {
+    "url": "https://other.example/path?q=test",
+    "allowed": true
+  },
+  {
+    "url": "chrome://settings",
+    "allowed": false
+  },
+  {
+    "url": "file:///tmp/a",
+    "allowed": false
+  },
+  {
+    "url": "javascript:alert(1)",
+    "allowed": false
+  },
+  {
+    "url": "https://user:pass@example.org",
+    "allowed": false
+  }
+]

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Browser Agent</title>
+    <link rel="stylesheet" href="./sidepanel.css" />
+    <link rel="stylesheet" href="./file-cards.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-row">
+        <h1 class="page-title" id="page-title">No page</h1>
+        <button class="icon-button" id="options-button" title="Open settings" type="button">
+          Settings
+        </button>
+      </div>
+      <p class="page-url" id="page-url">&nbsp;</p>
+      <p class="status" id="status">
+        <span class="status-dot" id="status-dot" data-state="disconnected"></span>
+        <span id="status-text">Disconnected</span>
+      </p>
+      <div class="run-meta">
+        <span id="run-status">Ready</span>
+        <span id="token-usage">0 tokens</span>
+        <span id="elapsed">0.0s</span>
+      </div>
+    </header>
+
+    <details class="timeline-panel" open>
+      <summary>Step timeline</summary>
+      <div id="timeline" class="timeline"></div>
+    </details>
+
+    <main class="conversation" id="conversation" aria-live="polite">
+      <p class="empty-state" id="empty-state">
+        Ask a question about the current web page.
+      </p>
+    </main>
+
+    <form class="composer" id="composer">
+      <label><input type="checkbox" id="research-mode" /> Research multiple PDFs from search results (not needed for Ask)</label>
+      <label><input type="checkbox" id="research-remote" /> Allow this question to send selected PDF text and page images to the configured remote provider</label>
+      <p id="research-selection" class="file-card-detail" aria-live="polite"></p>
+      <button type="button" id="research-selection-clear" class="secondary" hidden>Clear PDF selection</button>
+      <textarea
+        id="input"
+        class="input"
+        rows="3"
+        placeholder="Summarize this page"
+        aria-label="Message"
+      ></textarea>
+      <div class="composer-buttons">
+        <button type="submit" id="send" class="primary">Send</button>
+        <button type="button" id="pause" class="secondary" disabled>Pause</button>
+        <button type="button" id="resume" class="secondary" disabled>Resume</button>
+        <button type="button" id="stop" class="danger" disabled>Stop</button>
+        <button type="button" id="clear" class="secondary">Clear</button>
+      </div>
+    </form>
+
+    <dialog id="confirmation-dialog" class="confirmation-dialog">
+      <form method="dialog">
+        <h2>Confirm high-risk action</h2>
+        <p class="confirmation-warning">
+          Awaiting confirmation. Review the exact action before allowing it.
+        </p>
+        <dl class="confirmation-details">
+          <dt>Tool</dt><dd id="confirmation-tool"></dd>
+          <dt>Target</dt><dd id="confirmation-target"></dd>
+          <dt>Risk</dt><dd id="confirmation-risks"></dd>
+          <dt>Reason</dt><dd id="confirmation-reason"></dd>
+        </dl>
+        <p class="argument-label">Arguments</p>
+        <pre id="confirmation-arguments" class="confirmation-arguments"></pre>
+        <div class="confirmation-buttons">
+          <button value="allow_once" class="primary">Allow once</button>
+          <button value="allow_run" class="secondary">Allow for this run</button>
+          <button type="button" id="confirmation-pause" class="secondary">Pause</button>
+          <button type="button" id="confirmation-resume" class="secondary" disabled>Resume</button>
+          <button value="cancel" class="danger">Cancel</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="./sidepanel.ts"></script>
+  </body>
+</html>

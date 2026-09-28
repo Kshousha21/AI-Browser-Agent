@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Local document search</title>
+<style>
+body { font: 15px/1.4 system-ui,sans-serif; margin: 24px; }
+form { display:flex; gap:8px; align-items:center; }
+input { width:300px; padding:8px; } button { padding:8px 16px; }
+.submit { position:relative; }
+#suggestions { display:none; position:absolute; inset:0; z-index:20; background:white; border:1px solid #777; }
+#suggestions.open { display:block; }
+.layout { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+article { border-bottom:1px solid #ddd; padding:10px; }
+.decorations { display:none; }
+</style></head>
+<body><main><h1>Document search</h1>
+<form method="get"><label for="query">Query</label>
+<input id="query" name="q" role="searchbox" aria-label="Search documents">
+<div class="submit"><button type="submit">Search</button>
+<div id="suggestions" role="listbox" aria-label="Suggestions"><div role="option">Sample notes</div></div></div>
+</form><div class="layout"><section><h2 id="result-heading">Documents</h2><div id="results"></div></section>
+<aside id="detail-host"></aside></div><div class="decorations" id="decorations">HIDDEN_FIXTURE_CANARY</div>
+</main><script>
+const query = new URLSearchParams(location.search).get("q") || "";
+const input = document.getElementById("query");
+input.value = query;
+document.getElementById("result-heading").textContent = query ? `Documents for ${query}` : "Documents";
+for (let index=1; index<=8; index++) {
+ document.getElementById("results").insertAdjacentHTML("beforeend", `<article data-key="document-${index}">
+ <h3><a href="/document-${index}" role="button" data-key="document-${index}">Document ${index}</a></h3>
+ <p>Local reference ${index}. Synthetic notes for testing a browser on a document collection.</p>
+ <p>These stable paragraphs provide context for comparing full snapshots and small same-page changes.</p></article>`);
+}
+for (let index=0; index<350; index++) {
+ document.getElementById("decorations").insertAdjacentHTML("beforeend", '<div tabindex="0"><svg><path d="M0 0"></path></svg></div>');
+}
+let controlledValue = query;
+input.addEventListener("input", event => {
+ controlledValue = event.target.value; input.value = controlledValue;
+ input.dataset.observedValue = controlledValue;
+ document.getElementById("suggestions").classList.add("open");
+ setTimeout(() => document.getElementById("suggestions").classList.remove("open"), 650);
+});
+document.addEventListener("click", event => {
+ const link = event.target.closest('a[data-key]'); if (!link) return;
+ event.preventDefault();
+ document.querySelectorAll('a[aria-current]').forEach(item => item.removeAttribute('aria-current'));
+ link.setAttribute('aria-current','true');
+ const host = document.getElementById('detail-host');
+ host.replaceChildren();
+ const heading = document.createElement('h2'); heading.textContent = link.textContent;
+ const paragraph = document.createElement('p'); paragraph.textContent = 'Details inserted into the same top-level DOM.';
+ host.append(heading,paragraph);
+});
+</script></body></html>

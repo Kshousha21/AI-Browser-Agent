@@ -1,0 +1,23 @@
+{
+  "name": "ai-browser-agent-extension",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Chrome side-panel assistant that answers questions about the page you are on.",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "npm run typecheck && vite build && vite build --config vite.content.config.ts && node ../tools/build-metadata.mjs --write",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\""
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.287",
+    "@types/node": "^22.20.1",
+    "esbuild": "0.28.2",
+    "typescript": "^5.6.3",
+    "vite": "8.3.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "license": "Apache-2.0"
+}

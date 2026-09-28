@@ -1,0 +1,385 @@
+:root {
+  color-scheme: light dark;
+
+  --bg: #ffffff;
+  --bg-subtle: #f5f6f8;
+  --border: #dfe1e6;
+  --text: #1b1d21;
+  --text-muted: #62666d;
+  --accent: #2f6feb;
+  --accent-text: #ffffff;
+  --user-bubble: #eaf0fd;
+  --error: #b3261e;
+  --ok: #1e8e3e;
+  --warn: #c77700;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1d21;
+    --bg-subtle: #24272c;
+    --border: #383c43;
+    --text: #e8eaed;
+    --text-muted: #9aa0a6;
+    --accent: #6699ff;
+    --accent-text: #10131a;
+    --user-bubble: #2b3444;
+    --error: #f2b8b5;
+    --ok: #6dd58c;
+    --warn: #f5c26b;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font: 13px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ---------------------------------------------------------------- */
+/* Header                                                            */
+/* ---------------------------------------------------------------- */
+
+.header {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-subtle);
+  flex: 0 0 auto;
+}
+
+.header-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.page-url {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status {
+  margin: 6px 0 0;
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.run-meta {
+  margin-top: 5px;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 7px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.timeline-panel {
+  flex: 0 0 auto;
+  max-height: 34%;
+  overflow: auto;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  padding: 7px 12px;
+}
+
+.timeline-panel > summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.timeline-step {
+  border-left: 3px solid var(--ok);
+  padding-left: 7px;
+  font-size: 11px;
+}
+
+.timeline-step.failed {
+  border-left-color: var(--error);
+}
+
+.timeline-step summary {
+  cursor: pointer;
+}
+
+.timeline-body {
+  color: var(--text-muted);
+  white-space: pre-wrap;
+  padding: 4px 0 2px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  background: var(--text-muted);
+}
+
+.status-dot[data-state="connected"] {
+  background: var(--ok);
+}
+
+.status-dot[data-state="connecting"] {
+  background: var(--warn);
+}
+
+.status-dot[data-state="error"] {
+  background: var(--error);
+}
+
+.icon-button {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  padding: 2px 6px;
+  flex: 0 0 auto;
+}
+
+.icon-button:hover {
+  color: var(--text);
+}
+
+/* ---------------------------------------------------------------- */
+/* Conversation                                                      */
+/* ---------------------------------------------------------------- */
+
+.conversation {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.empty-state {
+  color: var(--text-muted);
+  margin: auto;
+  text-align: center;
+  max-width: 24ch;
+}
+
+.message {
+  padding: 8px 10px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.message.user {
+  background: var(--user-bubble);
+  align-self: flex-end;
+  max-width: 90%;
+}
+
+.message.assistant {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+}
+
+.message.error {
+  background: transparent;
+  border: 1px solid var(--error);
+  color: var(--error);
+}
+
+.message.pending::after {
+  content: "▍";
+  animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/* Composer                                                          */
+/* ---------------------------------------------------------------- */
+
+.composer {
+  flex: 0 0 auto;
+  border-top: 1px solid var(--border);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--bg-subtle);
+}
+
+.input {
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px;
+  resize: vertical;
+  min-height: 48px;
+}
+
+.input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+.composer-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+button.primary,
+button.secondary,
+button.danger {
+  font: inherit;
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+button.primary {
+  background: var(--accent);
+  color: var(--accent-text);
+  flex: 1 1 auto;
+}
+
+button.secondary {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text);
+}
+
+button.danger {
+  background: transparent;
+  border-color: var(--error);
+  color: var(--error);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.confirmation-dialog {
+  width: min(420px, calc(100vw - 24px));
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  border: 1px solid var(--warn);
+  border-radius: 10px;
+  padding: 16px;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.confirmation-dialog::backdrop {
+  background: rgb(0 0 0 / 0.58);
+}
+
+.confirmation-dialog h2 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.confirmation-warning {
+  margin: 0 0 12px;
+  color: var(--warn);
+}
+
+.confirmation-details {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 5px 8px;
+  margin: 0;
+}
+
+.confirmation-details dt {
+  color: var(--text-muted);
+}
+
+.confirmation-details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.argument-label {
+  margin: 12px 0 4px;
+  color: var(--text-muted);
+}
+
+.confirmation-arguments {
+  max-height: 140px;
+  overflow: auto;
+  margin: 0 0 14px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--bg-subtle);
+  white-space: pre-wrap;
+}
+
+.confirmation-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.confirmation-buttons button {
+  flex: 1 1 auto;
+}
+
+.documents { padding: 10px 14px; border-top: 1px solid var(--border); max-height: 320px; overflow: auto; flex-shrink: 0; }
+.documents label { display: block; margin: 7px 0; overflow-wrap: anywhere; }
+.documents textarea { width: 100%; box-sizing: border-box; margin: 8px 0; }
+.documents button { margin: 6px 0; }
+.documents p { font-size: 12px; }

@@ -1,0 +1,38 @@
+# Direct dependencies pinned to the verified Windows Python 3.14 environment.
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+websockets==17.1
+pydantic==2.13.5
+pydantic-settings==2.15.0
+PyYAML==6.0.3
+anthropic==1.3.0
+openai==3.8.0
+python-dotenv==1.2.3
+jsonschema==4.26.0
+# Local PDF extraction: BSD-3-Clause; pinned for reproducible ingestion.
+# AES support for PDFs that open without a password.
+pypdf[crypto]==6.17.0
+cryptography==50.0.1
+# Ephemeral page rasterization: Apache-2.0 OR BSD-3-Clause, with bundled PDFium notices.
+pypdfium2==5.13.0
+# Local CPU embeddings/vector math; model weights are prepared separately.
+numpy==2.4.6
+onnxruntime==1.29.0
+tokenizers==0.23.2
+
+# tests
+pytest==9.1.1
+pytest-asyncio==1.4.0
+httpx==0.28.1
+
+# Local visual retrieval runtime only; this installs no model weights.
+# Match the installed ColVision BiQwen2.5 API; immutable source revision.
+colpali-engine @ git+https://github.com/illuin-tech/colpali.git@97487f8871ff4d5d2284411fe61bdcd2cfe99894
+torch==2.13.0
+torchvision==0.28.0
+transformers==5.17.0
+peft==0.20.0
+Pillow==12.3.0
+
+# The setup guide uses the Hub CLI directly for pinned local model downloads.
+huggingface-hub==1.30.0

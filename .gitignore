@@ -1,0 +1,61 @@
+# python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# secrets
+backend/.env
+backend/audit/
+
+# node / build output
+node_modules/
+extension/dist/
+
+# editors / os
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# local target-site reconnaissance (may contain page content)
+recon/
+.env
+.venv/
+__pycache__/
+*.pyc
+node_modules/
+
+# workstation-private configuration, credentials, certificates, and operational caches
+.env.*
+!.env.example
+.agent_token
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+audit/
+logs/
+.coverage
+htmlcov/
+
+# isolated test-owned Chrome profile; never a personal browser profile
+/.test-artifacts/
+
+# Local document text, metadata, SQLite databases and journals (never source).
+/.local/
+
+# Private downloaded documents, screenshots, databases and local package caches.
+*.pdf
+*.log
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+screenshots/
+.npm-cache/
+
+# Private inert migration material, excluded from public source snapshots.
+/archive/

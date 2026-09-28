@@ -1,0 +1,15 @@
+{
+  "model_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+  "license": "Apache-2.0",
+  "dimension": 384,
+  "max_tokens": 128,
+  "embedding_pipeline": "masked-mean-disjoint-128-weighted-l2-v1",
+  "files": [
+    {"remote": "onnx/model_quint8_avx2.onnx", "local": "model.onnx", "bytes": 118453870, "sha256": "98a01d88b7de996cdea58c32ca71208c09968d143798814b2ea09d3439dc334f"},
+    {"remote": "tokenizer.json", "local": "tokenizer.json", "bytes": 9081518, "sha256": "2c3387be76557bd40970cec13153b3bbf80407865484b209e655e5e4729076b8"},
+    {"remote": "config.json", "local": "config.json", "bytes": 645, "sha256": "6300193cb75e01cf80c96decef7187dfb33094d97cc1490b7ead6ff134476e4e"},
+    {"remote": "sentence_bert_config.json", "local": "sentence_bert_config.json", "bytes": 53, "sha256": "70f4448f31320443fe3557cacea5abf2dcc4915dda8c80646bec9f3bb0aa5a1f"},
+    {"remote": "README.md", "local": "MODEL_CARD.md", "bytes": 3888, "sha256": "1e98ea05b0de579fcaad3d625b62ea55647142ed674d5f5ebf1440e4bbbb6f23"}
+  ]
+}

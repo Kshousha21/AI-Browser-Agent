@@ -1,0 +1,112 @@
+<!doctype html>
+<!--
+  SANITISED FIXTURE - dummy content only.
+  Reproduces the STRUCTURE of /portal/dosearchsite.action.
+
+  Covers:
+    * ol.search-results.cql > li  with h3 > span.aui-icon.content-type-* + a.search-result-link[data-type]
+    * div.highlights  (one real excerpt, one that is actually a LABEL LIST - the zip case)
+    * div.search-result-meta with a.container[title=Space] / [title=Page] / span.date
+    * a page result WITHOUT a parent page (optional-field handling)
+    * ul.pagination with strong.pagination-curr and a.pagination-next
+    * the #search-form / #filter-form controls
+-->
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <title>Search - Demo Portal</title>
+  <meta name="ajs-build-number" content="9111">
+  <meta name="ajs-remote-user-has-licensed-access" content="true">
+</head>
+<body id="demo-portal" class="theme-default aui-layout aui-theme-default">
+
+<a href="/portal/logout.action">Log Out</a>
+
+<div id="search-results-header">
+  <form id="search-form">
+    <input id="query-string" name="queryString" type="text" class="text long-field search-input" value="photonics">
+    <button id="search-query-submit-button" type="submit" class="aui-button"></button>
+  </form>
+  <form id="filter-form">
+    <input id="cql-field-contributor-0" type="text">
+    <input id="cql-field-space-1" type="text">
+    <input id="search-filter-include-archived" type="checkbox">
+    <input id="cql-field-type-3" type="text">
+    <a data-value="now('-1y')">Last year</a>
+    <a data-value="attachment">Attachments</a>
+  </form>
+</div>
+
+<div class="search-results-container">
+  <div class="search-results-count">Page 1 of 3. Showing 25 results (0.008 seconds)</div>
+
+  <ol class="search-results cql">
+
+    <!-- zip attachment: .highlights holds the LABEL LIST, not document text -->
+    <li>
+      <h3>
+        <span class="aui-icon aui-icon-small aui-iconfont- content-type-attachment-zip"
+              tabindex="0" aria-label="content icon for search result"></span>
+        <a class="search-result-link visitable"
+           href="/portal/spaces/demospace/pages/100000001/Markt-+Technologiestudien?preview=%2Fdemo%2Fabc"
+           data-type="attachment">pxref12345-photonics_study_b_2026.zip</a>
+      </h3>
+      <div class="highlights">publisherx 2026</div>
+      <div class="search-result-meta">
+        <a class="container" href="/portal/spaces/demospace" title="Space">Demo Space</a>
+        <span> / &hellip; / </span>
+        <a class="container" href="/portal/spaces/demospace/pages/100000001/x" title="Page">Markt- &amp; Technologiestudien</a>
+        &bull; <span class="date" title="Last Modified">Aug 28, 2026</span>
+      </div>
+    </li>
+
+    <!-- pdf attachment with a genuine excerpt -->
+    <li>
+      <h3>
+        <span class="aui-icon aui-icon-small aui-iconfont- content-type-attachment-pdf"
+              tabindex="0" aria-label="content icon for search result"></span>
+        <a class="search-result-link visitable"
+           href="/portal/spaces/demospace/pages/100000002/Seminare?preview=%2Fdemo%2Fdef"
+           data-type="attachment">Photonics Study A.pdf</a>
+      </h3>
+      <div class="highlights">Placeholder excerpt mentioning <strong>photonics</strong> packaging and integration for the demo fixture.</div>
+      <div class="search-result-meta">
+        <a class="container" href="/portal/spaces/demospace" title="Space">Demo Space</a>
+        <span> / &hellip; / </span>
+        <a class="container" href="/portal/spaces/demospace/pages/100000002/x" title="Page">Seminare</a>
+        &bull; <span class="date" title="Last Modified">Aug 03, 2026</span>
+      </div>
+    </li>
+
+    <!-- page result with NO parent page: parent_page_title must stay None -->
+    <li>
+      <h3>
+        <span class="aui-icon aui-icon-small aui-iconfont- content-type-page"
+              tabindex="0" aria-label="content icon for search result"></span>
+        <a class="search-result-link visitable"
+           href="/portal/spaces/demospace/pages/100000003/Demo+Page"
+           data-type="page">Demo Page</a>
+      </h3>
+      <div class="highlights">Another placeholder excerpt for a <strong>photonics</strong> page.</div>
+      <div class="search-result-meta">
+        <a class="container" href="/portal/spaces/demospace" title="Space">Demo Space</a>
+        &bull; <span class="date" title="Last Modified">Nov 18, 2025</span>
+      </div>
+    </li>
+
+    <!-- non-result row that shares the list: must be skipped, not counted -->
+    <li class="search-results-notice"><p>Placeholder notice row without a result link.</p></li>
+
+  </ol>
+
+  <div class="pagination-container">
+    <ul class="pagination">
+      <li data-index="1"><strong class="pagination-curr">1</strong></li>
+      <li><a href="/portal/dosearchsite.action?queryString=photonics&amp;startIndex=10">2</a></li>
+      <li><a class="pagination-next" href="/portal/dosearchsite.action?queryString=photonics&amp;startIndex=10">Next</a></li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>

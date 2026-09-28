@@ -1,0 +1,128 @@
+<!doctype html>
+<!--
+  SANITISED FIXTURE - dummy content only.
+  Reproduces the STRUCTURE of the Demo Portal 9.x search DRAWER overlay.
+
+  Notes reproduced faithfully:
+    * body carries the extra class `portal-search-ui` - the only page-kind signal,
+      because the drawer does NOT change the URL.
+    * Result anchors carry BOTH the unhashed twin classes
+      (search-drawer-list-item / search-content-item-component) AND the hashed
+      CSS-module class. The adapter must use only the unhashed ones.
+    * The content-title div carries the untruncated string in its `title` attribute
+      while its text node is elided.
+    * Filter checkboxes use machine values as ids (#content-type-attachment).
+    * "More results" lives in [class*=infinite-scroll-load-more] - load-more paging.
+-->
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <title>Demo Page - Demo Space - Demo Portal</title>
+  <meta name="ajs-page-id" content="100000003">
+  <meta name="ajs-space-key" content="demospace">
+  <meta name="ajs-space-name" content="Demo Space">
+  <meta name="ajs-content-type" content="page">
+  <meta name="ajs-build-number" content="9111">
+  <meta name="ajs-remote-user-has-licensed-access" content="true">
+</head>
+<body id="demo-portal" class="theme-default aui-layout aui-theme-default portal-search-ui">
+
+<a href="/portal/logout.action">Log Out</a>
+
+<div id="search-ui" class="aui-quicksearch header-quicksearch">
+  <button id="quick-search-query-button" aria-label="Search"></button>
+  <input id="quick-search-query" type="text" placeholder="Search">
+</div>
+
+<div class="App_search-ui-app__1LGa5">
+ <div class="SearchDrawerPanel_drawer-panel-mask__pR0MJ">
+  <div class="SearchDrawerPanel_drawer-panel-content__2uGQD">
+   <div id="search_drawer" class="SearchContainer_search-container-component__3vFGX">
+
+     <button id="search-drawer-close" class="aui-button aui-button-link">Close</button>
+
+     <div class="SearchContainer_search-typeahead-container__1a2b" data-testid="search-typeahead-container">
+       <input data-testid="search-filter-input" aria-label="Search query" value="photonics">
+       <button id="search-ui-input-clear-button" class="aui-icon aui-icon-small aui-iconfont-cross" aria-label="Clear"></button>
+       <a id="search-drawer-help-link" class="SearchContainer_search-help-link__9z" href="/portal/docs-92/Search">Search tips</a>
+     </div>
+
+     <div class="SearchContainer_search-filter-list-container__7k" data-testid="search-filter-list-container">
+       <button id="content-space-search-filter-button" class="aui-button" aria-label="Space filter">Space</button>
+       <button id="content-contributor-search-filter-button" class="aui-button" aria-label="Contributor filter">Contributor</button>
+       <button id="content-type-search-filter-button" class="aui-button active" aria-label="Type filter">Type</button>
+       <button id="date-search-filter-button" class="aui-button" aria-label="Date filter">Date</button>
+       <button id="label-search-filter-button" class="aui-button" aria-label="Label">Label</button>
+       <button id="space-category-search-filter-button" class="aui-button" aria-label="Label">Space category</button>
+       <a id="more-options-drawer" class="SearchContainer_more-options__4d"
+          href="/portal/dosearchsite.action?cql=siteSearch+~+%22photonics%22">Advanced search</a>
+     </div>
+
+     <div class="SearchContainer_search-content-container__2NKaj" data-testid="search-content-container">
+       <div id="search-result-container" class="SearchItemsPanel_search-items-container__1zmZm">
+         <div class="SearchItemsPanel_search-result-heading__3sMUN"><span>3 search results</span></div>
+
+         <div class="search-section-items InfiniteScroll_infinite-scroll-component__5g">
+
+           <a class="search-drawer-list-item search-content-item-component SearchContentItem_search-content-item-component__1a"
+              href="/portal/spaces/demospace/pages/100000001/Markt-+Technologiestudien?preview=%2Fdemo%2Fabc&amp;searchId=DEMO">
+             <div class="SearchContentItem_content-image-container__2b">
+               <div class="content-type-attachment-zip SearchContentItem_content-image__2MAdK"></div>
+             </div>
+             <div class="SearchContentItem_content-text-container__3c">
+               <div class="SearchContentItem_content-title__4d" title="pxref12345-photonics_study_b_2026.zip"><span>pxref12345-photonics_study_b_2026.zip</span></div>
+               <div class="SearchContentItem_content-subtitle__5e"><strong>Demo Space / ... / Markt- &amp; Technologiestudien</strong><span>Aug 28, 2026</span></div>
+               <div class="SearchContentItem_content-body__6f"><span>publisherx 2026</span></div>
+             </div>
+           </a>
+
+           <a class="search-drawer-list-item search-content-item-component SearchContentItem_search-content-item-component__1a"
+              href="/portal/spaces/demospace/pages/100000002/Seminare?preview=%2Fdemo%2Fdef&amp;searchId=DEMO">
+             <div class="SearchContentItem_content-image-container__2b">
+               <div class="content-type-attachment-pdf SearchContentItem_content-image__2MAdK"></div>
+             </div>
+             <div class="SearchContentItem_content-text-container__3c">
+               <div class="SearchContentItem_content-title__4d" title="Photonics Study A.pdf"><span>Photonics Study A.pdf</span></div>
+               <div class="SearchContentItem_content-subtitle__5e"><strong>Demo Space / ... / Seminare</strong><span>Aug 03, 2026</span></div>
+               <div class="SearchContentItem_content-body__6f"><span>Placeholder excerpt mentioning <strong>photonics</strong> integration.</span></div>
+             </div>
+           </a>
+
+           <a class="search-drawer-list-item search-content-item-component SearchContentItem_search-content-item-component__1a"
+              href="/portal/spaces/demospace/pages/100000003/Demo+Page">
+             <div class="SearchContentItem_content-image-container__2b">
+               <div class="aui-icon content-type-page SearchContentItem_content-image__2MAdK"></div>
+             </div>
+             <div class="SearchContentItem_content-text-container__3c">
+               <div class="SearchContentItem_content-title__4d" title="Demo Page"><span>Demo Page</span></div>
+               <div class="SearchContentItem_content-subtitle__5e"><strong>Demo Space</strong><span>Nov 18, 2025</span></div>
+               <div class="SearchContentItem_content-body__6f"><span>Another placeholder excerpt.</span></div>
+             </div>
+           </a>
+
+         </div>
+
+         <div class="InfiniteScroll_infinite-scroll-load-more__7h">
+           <button type="button" class="aui-button">More results</button>
+         </div>
+       </div>
+     </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- Type filter dropdown: rendered OUTSIDE #search_drawer, in a portal layer -->
+<div id="content-type-filter-dropdown" class="SearchSelect_search-filter-drop-down__8i">
+  <div id="content-type-filter-checkbox-list" class="loaded-result SearchSelect_checkbox-list__9j">
+    <label><input type="checkbox" id="content-type-space" value="space">Space</label>
+    <label><input type="checkbox" id="content-type-user" value="user">User</label>
+    <label><input type="checkbox" id="content-type-attachment" value="attachment" checked>Attachment</label>
+    <label><input type="checkbox" id="content-type-comment" value="comment">Comment</label>
+    <label><input type="checkbox" id="content-type-page" value="page">Page</label>
+    <label><input type="checkbox" id="content-type-blogpost" value="blogpost">Blog post</label>
+  </div>
+</div>
+
+</body>
+</html>

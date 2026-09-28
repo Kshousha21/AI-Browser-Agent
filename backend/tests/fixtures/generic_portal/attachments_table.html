@@ -1,0 +1,108 @@
+<!doctype html>
+<!--
+  SANITISED FIXTURE - dummy content only.
+  Reproduces the STRUCTURE of /portal/pages/viewpageattachments.action.
+
+  Covers:
+    * table.attachments.attachments-bulk with tr[id^=attachment-][data-attachment-filename]
+    * .filename-column icon carrying content-type-attachment-*
+    * .filesize-column / td.creator / td.created-date / td.labels / td.comment
+    * td.labels containing BOTH real label links and the 'Edit Labels' editor control
+      (which must be excluded by href shape, not by its localised text)
+    * a hidden historical-version row that must NOT become an attachment
+    * .aui-nav-pagination with .aui-nav-selected and .aui-nav-next
+-->
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <title>Attachments - Markt- &amp; Technologiestudien - Demo Space - Demo Portal</title>
+  <meta name="ajs-page-id" content="100000001">
+  <meta name="ajs-space-key" content="demospace">
+  <meta name="ajs-content-type" content="page">
+  <meta name="ajs-build-number" content="9111">
+  <meta name="ajs-remote-user-has-licensed-access" content="true">
+</head>
+<body id="demo-portal" class="theme-default aui-layout aui-theme-default">
+
+<a href="/portal/logout.action">Log Out</a>
+
+<table class="aui tableview attachments attachments-bulk">
+  <thead>
+    <tr>
+      <th class="expand-column attachment-history"></th>
+      <th class="checkbox-column"></th>
+      <th class="filename-column">Name</th>
+      <th class="filesize-column">Size</th>
+      <th class="filecreator-column">Creator</th>
+      <th class="filedate-column">Creation Date</th>
+      <th class="labels">Labels</th>
+      <th class="comment">Comment</th>
+      <th class="actions-column"></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr id="attachment-900000001" data-attachment-filename="pxref12345-photonics_study_b_2026.zip">
+      <td class="attachment-history"></td>
+      <td class="checkbox-column"></td>
+      <td class="filename-column">
+        <span class="aui-icon content-type-attachment-zip"></span>
+        <a href="/portal/download/attachments/100000001/pxref12345-photonics_study_b_2026.zip?api=v2">pxref12345-photonics_study_b_2026.zip</a>
+      </td>
+      <!-- NOTE: observed on the live site, the size cell on DATA rows carries no class;
+           only the header th has .filesize-column. Reproduced faithfully. -->
+      <td>23.01 MB</td>
+      <td class="creator">Demo, Uploader</td>
+      <td class="created-date">Aug 28, 2026 13:02</td>
+      <td class="labels">
+        <a href="/portal/label/demospace/publisherx">publisherx</a>
+        <a href="/portal/label/demospace/2026">2026</a>
+        <a class="edit-labels-control" href="#">Edit Labels</a>
+      </td>
+      <td class="comment"></td>
+      <td class="attachment-actions"></td>
+    </tr>
+
+    <!-- historical version row: same filename, must NOT be emitted as an attachment -->
+    <tr class="history-900000001 historicalAttachmentRow hidden"
+        data-attachment-filename="pxref12345-photonics_study_b_2026.zip"
+        data-attachment-version="1">
+      <td></td>
+      <td class="attachment-history"></td>
+      <td class="filename-column">Version 1 (current)</td>
+      <td class="filesize-column">23.01 MB</td>
+      <td class="creator">Demo, Uploader</td>
+      <td class="created-date">Aug 28, 2026 13:02</td>
+      <td></td>
+      <td class="comment"></td>
+      <td class="attachment-actions"></td>
+    </tr>
+
+    <!-- no labels, no comment: optional-field handling -->
+    <tr id="attachment-900000002" data-attachment-filename="Photonics Study A.pdf">
+      <td class="attachment-history"></td>
+      <td class="checkbox-column"></td>
+      <td class="filename-column">
+        <span class="aui-icon content-type-attachment-pdf"></span>
+        <a href="/portal/download/attachments/100000001/Photonics%20Study%20A.pdf?api=v2">Photonics Study A.pdf</a>
+      </td>
+      <td>4.12 MB</td>
+      <td class="creator">Demo, Uploader</td>
+      <td class="created-date">Feb 12, 2026 09:30</td>
+      <td class="labels"><a class="edit-labels-control" href="#">Edit Labels</a></td>
+      <td class="comment"></td>
+      <td class="attachment-actions"></td>
+    </tr>
+
+  </tbody>
+</table>
+
+<ul class="aui-nav aui-nav-pagination">
+  <li class="aui-nav-previous"><a href="/portal/pages/viewpageattachments.action?pageId=100000001">Prev</a></li>
+  <li class="aui-nav-selected">1</li>
+  <li><a href="/portal/pages/viewpageattachments.action?pageId=100000001&amp;sortBy=date&amp;startIndex=20">2</a></li>
+  <li class="aui-nav-next"><a href="/portal/pages/viewpageattachments.action?pageId=100000001&amp;sortBy=date&amp;startIndex=20">Next</a></li>
+</ul>
+
+</body>
+</html>

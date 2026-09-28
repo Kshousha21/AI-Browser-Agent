@@ -1,0 +1,9 @@
+{
+  "model_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+  "license": "Apache-2.0",
+  "artifacts": {
+    "gpu-o4": {"remote": "onnx/model_O4.onnx", "local": "model.onnx", "bytes": 235166264, "sha256": "307bba13f9f5708461169c9f2d633c76c5572919bcc998606b6e5aea46f05db4", "precision": "fp16"},
+    "gpu-fp32": {"remote": "onnx/model.onnx", "local": "model.onnx", "bytes": 470301610, "sha256": "10f7a088420252b26caf819236ca2c9d2987afd0fc06fec7553b542a5655a05a", "precision": "fp32"}
+  }
+}
